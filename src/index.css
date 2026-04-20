@@ -1,1 +1,26 @@
+/*
+  Tailwind v4 entry: `@import "tailwindcss"` bundles base, components, and utilities.
+  (Legacy v3 used: @tailwind base; @tailwind components; @tailwind utilities;)
+*/
 @import "tailwindcss";
+@config "../tailwind.config.ts";
+
+/* Raw palette — single source for global CSS and Tailwind @theme */
+:root {
+  --palette-cream: #fdfbf7;
+  --palette-matcha: #e8ecd7;
+  --palette-blush: #fdebed;
+  --palette-espresso: #4a3b32;
+}
+
+/* Semantic colors + typography: bg-background, text-espresso, font-sans, etc. */
+@theme {
+  --color-background: var(--palette-cream);
+  --color-primary: var(--palette-matcha);
+  --color-blush: var(--palette-blush);
+  --color-espresso: var(--palette-espresso);
+
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+}
+
