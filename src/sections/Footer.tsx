@@ -84,7 +84,7 @@ export default function Footer({
               [
                 ['Privacy', 'privacy'],
                 ['Terms', 'terms'],
-                ['Cancellation', 'cancellation'],
+                ...(siteConfig.features.showCancellationPolicy ? ([['Cancellation', 'cancellation']] as const) : []),
                 ['Cookies', 'cookies'],
               ] as const
             ).map(([label, kind]) => (

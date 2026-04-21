@@ -18,6 +18,8 @@ export const BASE_CONFIG: BaseInfrastructure = {
   features: {
     showSplash: true,
     pauseGrainDuringSplash: true,
+    showCancellationPolicy: false,
+    showGeminiChat: true,
   },
   payment: {
     enabled: false,

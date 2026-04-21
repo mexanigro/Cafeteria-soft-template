@@ -2,6 +2,8 @@ import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import { siteConfig } from '@/src/config/site';
 import { SeoHead } from '@/src/components/SeoHead';
 import { LegalPage } from '@/src/components/LegalPage';
+import { FloatingChat } from '@/src/components/FloatingChat';
+import { ScrollToTop } from '@/src/components/ScrollToTop';
 import Navbar from '@/src/sections/Navbar';
 import Hero from '@/src/sections/Hero';
 import SplashScreen from '@/src/sections/SplashScreen';
@@ -22,9 +24,15 @@ const Team = lazy(() => import('@/src/sections/Team'));
 const Location = lazy(() => import('@/src/sections/Location'));
 const Footer = lazy(() => import('@/src/sections/Footer'));
 
+function resolveLegalFromPath(pathname: string): LegalDocKind | null {
+  const kind = parseLegalFromPath(pathname);
+  if (kind === 'cancellation' && !siteConfig.features.showCancellationPolicy) return null;
+  return kind;
+}
+
 function initialLegalKind(): LegalDocKind | null {
   if (typeof window === 'undefined') return null;
-  return parseLegalFromPath(window.location.pathname);
+  return resolveLegalFromPath(window.location.pathname);
 }
 
 export default function App() {
@@ -34,7 +42,16 @@ export default function App() {
   const [splashDismissed, setSplashDismissed] = useState(() => !!initialLegal || !siteConfig.features.showSplash);
 
   useEffect(() => {
-    const onPop = () => setLegalKind(parseLegalFromPath(window.location.pathname));
+    if (
+      parseLegalFromPath(window.location.pathname) === 'cancellation' &&
+      !siteConfig.features.showCancellationPolicy
+    ) {
+      window.history.replaceState({}, '', '/');
+    }
+  }, []);
+
+  useEffect(() => {
+    const onPop = () => setLegalKind(resolveLegalFromPath(window.location.pathname));
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
@@ -46,6 +63,7 @@ export default function App() {
   }, [legalKind]);
 
   const navigateLegal = useCallback((kind: LegalDocKind) => {
+    if (kind === 'cancellation' && !siteConfig.features.showCancellationPolicy) return;
     window.history.pushState({}, '', legalKindToPath(kind));
     setLegalKind(kind);
     window.scrollTo(0, 0);
@@ -64,10 +82,11 @@ export default function App() {
   const splashVisible = siteConfig.features.showSplash && !splashDismissed;
   const pauseGrain = splashVisible && siteConfig.features.pauseGrainDuringSplash;
 
-  if (legalKind) {
-    return (
-      <>
-        <SeoHead />
+  return (
+    <>
+      <SeoHead />
+
+      {legalKind ? (
         <div className="min-h-screen bg-cream grain-overlay">
           <Navbar legalMode onGoHome={goHome} />
           <main>
@@ -77,48 +96,48 @@ export default function App() {
             <Footer onLegalNavigate={navigateLegal} />
           </Suspense>
         </div>
-      </>
-    );
-  }
+      ) : (
+        <>
+          {splashVisible && <SplashScreen onComplete={handleSplashComplete} />}
+          <div className={`grain-overlay ${pauseGrain ? 'grain-paused' : ''}`}>
+            <Navbar />
+            <main>
+              <div className="relative">
+                <div
+                  className="sticky top-0 h-0 w-full pointer-events-none overflow-visible"
+                  aria-hidden="true"
+                >
+                  <img
+                    src={siteConfig.assets.heroBackground}
+                    alt=""
+                    className="absolute top-0 left-0 h-screen w-full object-cover"
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+                </div>
 
-  return (
-    <>
-      <SeoHead />
-      {splashVisible && <SplashScreen onComplete={handleSplashComplete} />}
-      <div className={`grain-overlay ${pauseGrain ? 'grain-paused' : ''}`}>
-        <Navbar />
-        <main>
-          <div className="relative">
-            <div
-              className="sticky top-0 h-0 w-full pointer-events-none overflow-visible"
-              aria-hidden="true"
-            >
-              <img
-                src={siteConfig.assets.heroBackground}
-                alt=""
-                className="absolute top-0 left-0 h-screen w-full object-cover"
-                fetchPriority="high"
-                decoding="async"
-              />
-            </div>
+                <Hero />
+                <Suspense fallback={null}>
+                  <Philosophy />
+                  <MenuSection />
+                </Suspense>
+              </div>
 
-            <Hero />
-            <Suspense fallback={null}>
-              <Philosophy />
-              <MenuSection />
-            </Suspense>
+              <Suspense fallback={<div className="h-24" aria-hidden="true" />}>
+                <Process />
+                <Ambience />
+                <Testimonials />
+                <Team />
+                <Location />
+                <Footer onLegalNavigate={navigateLegal} />
+              </Suspense>
+            </main>
           </div>
+        </>
+      )}
 
-          <Suspense fallback={<div className="h-24" aria-hidden="true" />}>
-            <Process />
-            <Ambience />
-            <Testimonials />
-            <Team />
-            <Location />
-            <Footer onLegalNavigate={navigateLegal} />
-          </Suspense>
-        </main>
-      </div>
+      <FloatingChat />
+      <ScrollToTop />
     </>
   );
 }

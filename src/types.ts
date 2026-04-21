@@ -249,6 +249,10 @@ export interface NichePreset {
 export interface FeatureFlags {
   showSplash: boolean;
   pauseGrainDuringSplash: boolean;
+  /** Footer + route for cancellation policy (e.g. private bookings). Off for typical café walk-ins. */
+  showCancellationPolicy: boolean;
+  /** Gemini-powered visitor chat (requires `VITE_GEMINI_API_KEY`). */
+  showGeminiChat: boolean;
 }
 
 export interface PaymentConfig {
