@@ -24,6 +24,18 @@ export function SeoHead() {
     upsertMeta('property', 'og:title', seo.ogTitle);
     upsertMeta('property', 'og:description', seo.ogDescription);
     upsertMeta('property', 'og:locale', seo.ogLocale);
+    upsertMeta('property', 'og:type', 'website');
+
+    const origin = window.location.origin;
+    const ogImageUrl = `${origin}/og-image.png`;
+    upsertMeta('property', 'og:image', ogImageUrl);
+    upsertMeta('property', 'og:image:width', '1200');
+    upsertMeta('property', 'og:image:height', '630');
+
+    upsertMeta('name', 'twitter:card', 'summary_large_image');
+    upsertMeta('name', 'twitter:title', seo.ogTitle);
+    upsertMeta('name', 'twitter:description', seo.ogDescription);
+    upsertMeta('name', 'twitter:image', ogImageUrl);
 
     if (assets.preloadHeroImage) {
       let preload = document.querySelector('link[rel="preload"][as="image"]');

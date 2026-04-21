@@ -22,9 +22,10 @@ export const aromaVivoPreset: NichePreset = {
     htmlLang: 'en',
     title: 'Aroma Vivo — Specialty Coffee',
     description:
-      'Aroma Vivo — Small-batch specialty coffee. Every cup is a ceremony of flavor and craft.',
-    ogTitle: 'Aroma Vivo — Specialty Coffee',
-    ogDescription: 'Every cup tells a story. Let coffee speak before your first sip.',
+      'Small-batch specialty coffee roasted with care in Buenos Aires. Every cup is a ceremony of flavor and craft.',
+    ogTitle: 'Aroma Vivo — Specialty Coffee & Artisan Roasters',
+    ogDescription:
+      'Small-batch specialty coffee roasted with care. Every cup tells a story — let coffee speak before your first sip.',
     ogLocale: 'en_US',
     themeColor: '#2C1810',
     author: 'Aroma Vivo',
