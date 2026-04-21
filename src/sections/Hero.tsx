@@ -6,7 +6,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative h-[130vh] w-full"
+      className="relative h-[250vh] sm:h-[240vh] md:h-[210vh] lg:h-[170vh] xl:h-[130vh] w-full"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <img
