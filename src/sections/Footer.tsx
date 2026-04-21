@@ -1,10 +1,11 @@
 import { Instagram, Facebook } from 'lucide-react';
+import type { MouseEvent } from 'react';
 
 const navLinks = [
-  { label: 'Esencia', href: '#philosophy' },
-  { label: 'Carta', href: '#signature' },
-  { label: 'Ambiente', href: '#ambience' },
-  { label: 'Visitanos', href: '#location' },
+  { label: 'Essence', href: '#philosophy' },
+  { label: 'Menu', href: '#menu' },
+  { label: 'Ambience', href: '#ambience' },
+  { label: 'Visit Us', href: '#location' },
 ];
 
 const socialLinks = [
@@ -13,7 +14,7 @@ const socialLinks = [
 ];
 
 export default function Footer() {
-  const handleAnchor = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleAnchor = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -36,15 +37,15 @@ export default function Footer() {
               Aroma Vivo
             </a>
             <p className="text-latte/40 text-sm leading-relaxed max-w-xs">
-              Cafe de especialidad tostado artesanalmente. Cada taza es una 
-              ceremonia de sabor y dedicacion.
+              Specialty coffee roasted in small batches. Every cup is a ceremony
+              of flavor and craft.
             </p>
           </div>
 
           {/* Navigation */}
           <div>
             <p className="text-xs tracking-[4px] uppercase text-latte/30 mb-6">
-              Navegacion
+              Navigation
             </p>
             <div className="flex flex-col gap-3">
               {navLinks.map((link) => (
@@ -63,7 +64,7 @@ export default function Footer() {
           {/* Social */}
           <div>
             <p className="text-xs tracking-[4px] uppercase text-latte/30 mb-6">
-              Seguinos
+              Follow Us
             </p>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
@@ -87,10 +88,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-latte/5 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-latte/20 text-xs">
-            &copy; {new Date().getFullYear()} Aroma Vivo. Todos los derechos reservados.
+            &copy; {new Date().getFullYear()} Aroma Vivo. All rights reserved.
           </p>
           <p className="text-latte/20 text-xs">
-            Hecho con dedicacion en Buenos Aires
+            Crafted with care in Buenos Aires
           </p>
         </div>
       </div>

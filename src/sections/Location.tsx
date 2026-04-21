@@ -1,115 +1,42 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MapPin, Clock, Phone } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const hours = [
-  { day: 'Lunes — Viernes', time: '07:00 — 20:00' },
-  { day: 'Sabado', time: '08:00 — 21:00' },
-  { day: 'Domingo', time: '09:00 — 18:00' },
+  { day: 'Monday - Friday', time: '07:00 - 20:00' },
+  { day: 'Saturday', time: '08:00 - 21:00' },
+  { day: 'Sunday', time: '09:00 - 18:00' },
 ];
 
 export default function Location() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Content reveal
-      gsap.fromTo(
-        contentRef.current,
-        { x: -40, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-
-      // Map reveal
-      gsap.fromTo(
-        mapRef.current,
-        { x: 40, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-
-      // Hours stagger
-      if (contentRef.current) {
-        const items = contentRef.current.querySelectorAll('.hour-row');
-        gsap.fromTo(
-          items,
-          { y: 20, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: contentRef.current,
-              start: 'top 80%',
-              toggleActions: 'play none none reverse',
-            },
-          }
-        );
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <section
       id="location"
-      ref={sectionRef}
+      data-defer-render="true"
       className="relative bg-mocha py-32 md:py-44 px-6 md:px-10 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-        {/* Content */}
-        <div ref={contentRef} className="opacity-0">
+        <div>
           <p className="text-xs tracking-[6px] uppercase text-caramel mb-8">
-            Visitanos
+            Visit Us
           </p>
 
           <h2 className="font-serif text-4xl md:text-5xl text-latte leading-[1.1] mb-8">
-            Te esperamos
+            We are ready
             <br />
-            <span className="italic text-caramel">con una taza</span>
+            <span className="italic text-caramel">with your cup</span>
           </h2>
 
           <p className="text-latte/60 text-lg leading-relaxed mb-12 max-w-md">
-            Veni a conocernos. Ya sea para un espresso rapido o una tarde 
-            de lectura, tenemos el lugar perfecto para vos.
+            Come and meet us. Whether you need a quick espresso or a quiet
+            reading afternoon, we have the right spot for you.
           </p>
 
-          {/* Info blocks */}
           <div className="space-y-8">
-            {/* Address */}
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-full bg-latte/5 flex items-center justify-center flex-shrink-0">
                 <MapPin className="w-4 h-4 text-caramel" />
               </div>
               <div>
-                <p className="text-latte font-medium mb-1">Direccion</p>
+                <p className="text-latte font-medium mb-1">Address</p>
                 <p className="text-latte/50 text-sm leading-relaxed">
                   Av. del Libertador 2840,
                   <br />
@@ -118,16 +45,15 @@ export default function Location() {
               </div>
             </div>
 
-            {/* Hours */}
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-full bg-latte/5 flex items-center justify-center flex-shrink-0">
                 <Clock className="w-4 h-4 text-caramel" />
               </div>
               <div>
-                <p className="text-latte font-medium mb-3">Horarios</p>
+                <p className="text-latte font-medium mb-3">Opening Hours</p>
                 <div className="space-y-2">
                   {hours.map((h) => (
-                    <div key={h.day} className="hour-row flex justify-between text-sm opacity-0">
+                    <div key={h.day} className="hour-row flex justify-between text-sm">
                       <span className="text-latte/50">{h.day}</span>
                       <span className="text-latte/70 tabular-nums">{h.time}</span>
                     </div>
@@ -136,13 +62,12 @@ export default function Location() {
               </div>
             </div>
 
-            {/* Phone */}
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-full bg-latte/5 flex items-center justify-center flex-shrink-0">
                 <Phone className="w-4 h-4 text-caramel" />
               </div>
               <div>
-                <p className="text-latte font-medium mb-1">Contacto</p>
+                <p className="text-latte font-medium mb-1">Contact</p>
                 <p className="text-latte/50 text-sm">
                   +54 11 4567-8901
                 </p>
@@ -151,12 +76,9 @@ export default function Location() {
           </div>
         </div>
 
-        {/* Map placeholder — styled */}
-        <div ref={mapRef} className="opacity-0">
+        <div>
           <div className="relative aspect-square md:aspect-[4/5] rounded-3xl overflow-hidden bg-espresso/30 border border-latte/5">
-            {/* Stylized map placeholder */}
             <div className="absolute inset-0">
-              {/* Grid lines */}
               <div className="absolute inset-0 opacity-10">
                 {[...Array(8)].map((_, i) => (
                   <div
@@ -174,7 +96,6 @@ export default function Location() {
                 ))}
               </div>
 
-              {/* Street lines */}
               <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
                 <line x1="0" y1="45%" x2="100%" y2="45%" stroke="currentColor" strokeWidth="1" className="text-latte/15" />
                 <line x1="0" y1="70%" x2="100%" y2="70%" stroke="currentColor" strokeWidth="1" className="text-latte/15" />
@@ -182,7 +103,6 @@ export default function Location() {
                 <line x1="65%" y1="0" x2="65%" y2="100%" stroke="currentColor" strokeWidth="1" className="text-latte/15" />
               </svg>
 
-              {/* Location pin */}
               <div className="absolute top-[42%] left-[60%] -translate-x-1/2 -translate-y-1/2">
                 <div className="relative">
                   <div className="w-12 h-12 rounded-full bg-caramel/20 flex items-center justify-center animate-pulse">
@@ -190,12 +110,10 @@ export default function Location() {
                       <MapPin className="w-3 h-3 text-mocha" />
                     </div>
                   </div>
-                  {/* Ripple */}
                   <div className="absolute inset-0 rounded-full bg-caramel/10 animate-ping" style={{ animationDuration: '2s' }} />
                 </div>
               </div>
 
-              {/* Street labels */}
               <span className="absolute top-[46%] left-[2%] text-[10px] text-latte/20 tracking-wider uppercase">
                 Av. Libertador
               </span>
@@ -207,7 +125,6 @@ export default function Location() {
               </span>
             </div>
 
-            {/* Overlay label */}
             <div className="absolute bottom-6 left-6 right-6">
               <div className="bg-mocha/90 backdrop-blur-sm rounded-xl px-5 py-4 border border-latte/10">
                 <p className="text-latte font-medium text-sm">Aroma Vivo</p>

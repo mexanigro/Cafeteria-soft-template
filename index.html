@@ -1,42 +1,31 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Aroma Vivo — Cafe de especialidad tostado artesanalmente. Cada taza es una ceremonia de sabor y dedicacion." />
+    <meta name="description" content="Aroma Vivo — Small-batch specialty coffee. Every cup is a ceremony of flavor and craft." />
     <meta name="theme-color" content="#2C1810" />
     <meta name="author" content="Aroma Vivo" />
 
     <!-- Open Graph -->
     <meta property="og:title" content="Aroma Vivo — Specialty Coffee" />
-    <meta property="og:description" content="Cada taza cuenta una historia. Deja que el cafe te hable antes del primer sorbo." />
+    <meta property="og:description" content="Every cup tells a story. Let coffee speak before your first sip." />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="es_AR" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Outfit:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Outfit:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <link rel="preload" as="image" href="/images/hero-bg.jpg" fetchpriority="high" />
 
     <title>Aroma Vivo — Specialty Coffee</title>
-
-    <style>
-      /* Prevent FOUC */
-      html { background-color: #2C1810; }
-      body { opacity: 0; transition: opacity 0.3s ease; }
-      body.loaded { opacity: 1; }
-    </style>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      window.addEventListener('DOMContentLoaded', function() {
-        document.body.classList.add('loaded');
-      });
-    </script>
   </body>
 </html>

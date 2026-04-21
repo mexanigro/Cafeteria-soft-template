@@ -35,27 +35,10 @@
   --font-serif: var(--font-serif);
 }
 
-/* --- Base --- */
 html {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-html.lenis, html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
 }
 
 body {
@@ -79,47 +62,6 @@ body {
   text-wrap: balance;
 }
 
-/* --- Animations --- */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-@keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-60px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes slideInRight {
-  from { opacity: 0; transform: translateX(60px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes charReveal {
-  from { opacity: 0; transform: translateY(100%) rotate(3deg); }
-  to   { opacity: 1; transform: translateY(0) rotate(0); }
-}
-
-@keyframes lineExpand {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50%      { transform: translateY(-10px); }
-}
-
 @keyframes grain {
   0%, 100% { transform: translate(0, 0); }
   10%      { transform: translate(-5%, -10%); }
@@ -129,40 +71,6 @@ body {
   90%      { transform: translate(-1%, 7%); }
 }
 
-.animate-fadeInUp {
-  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.6s ease forwards;
-}
-
-.animate-scaleIn {
-  animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-slideInLeft {
-  animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-slideInRight {
-  animation: slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-charReveal {
-  animation: charReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-lineExpand {
-  animation: lineExpand 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transform-origin: left;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* --- Grain Overlay --- */
 .grain-overlay::before {
   content: "";
   position: fixed;
@@ -179,33 +87,28 @@ body {
   animation: grain 8s steps(10) infinite;
 }
 
-/* --- Reveal utilities (GSAP) --- */
-.reveal-up {
-  opacity: 0;
-  transform: translateY(40px);
+/* Defer heavy offscreen section layout/paint in Chromium-based browsers */
+[data-defer-render="true"] {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 900px;
 }
 
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-40px);
+/* Keep fixed hero effect on desktop, avoid repaint cost on mobile */
+.hero-fixed-bg {
+  background-attachment: fixed;
 }
 
-.reveal-right {
-  opacity: 0;
-  transform: translateX(40px);
+@media (max-width: 1024px) {
+  .hero-fixed-bg {
+    background-attachment: scroll;
+  }
+
+  .grain-overlay::before {
+    animation: none;
+    opacity: 0.015;
+  }
 }
 
-.reveal-scale {
-  opacity: 0;
-  transform: scale(0.95);
-}
-
-/* --- Parallax layers --- */
-.parallax-slow {
-  will-change: transform;
-}
-
-/* --- Custom scrollbar --- */
 ::-webkit-scrollbar {
   width: 8px;
 }

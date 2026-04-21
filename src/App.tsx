@@ -1,20 +1,18 @@
-import { useState, useCallback } from 'react';
-import { useSmoothScroll } from '@/src/hooks/useSmoothScroll';
-import SplashScreen from '@/src/sections/SplashScreen';
+import { Suspense, lazy, useCallback, useState } from 'react';
 import Navbar from '@/src/sections/Navbar';
 import Hero from '@/src/sections/Hero';
-import Philosophy from '@/src/sections/Philosophy';
-import MenuSection from '@/src/sections/Menu';
-import Process from '@/src/sections/Process';
-import Ambience from '@/src/sections/Ambience';
-import Testimonials from '@/src/sections/Testimonials';
-import Team from '@/src/sections/Team';
-import Location from '@/src/sections/Location';
-import Footer from '@/src/sections/Footer';
+import SplashScreen from '@/src/sections/SplashScreen';
+const Philosophy = lazy(() => import('@/src/sections/Philosophy'));
+const MenuSection = lazy(() => import('@/src/sections/Menu'));
+const Process = lazy(() => import('@/src/sections/Process'));
+const Ambience = lazy(() => import('@/src/sections/Ambience'));
+const Testimonials = lazy(() => import('@/src/sections/Testimonials'));
+const Team = lazy(() => import('@/src/sections/Team'));
+const Location = lazy(() => import('@/src/sections/Location'));
+const Footer = lazy(() => import('@/src/sections/Footer'));
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
-  useSmoothScroll();
 
   const handleSplashComplete = useCallback(() => {
     setShowSplash(false);
@@ -23,20 +21,21 @@ export default function App() {
   return (
     <>
       {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-
       <div className="grain-overlay">
         <Navbar />
         <main>
           <Hero />
-          <Philosophy />
-          <MenuSection />
-          <Process />
-          <Ambience />
-          <Testimonials />
-          <Team />
-          <Location />
+          <Suspense fallback={<div className="h-24" aria-hidden="true" />}>
+            <Philosophy />
+            <MenuSection />
+            <Process />
+            <Ambience />
+            <Testimonials />
+            <Team />
+            <Location />
+            <Footer />
+          </Suspense>
         </main>
-        <Footer />
       </div>
     </>
   );

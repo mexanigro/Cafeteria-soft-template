@@ -1,20 +1,18 @@
-import { useEffect, useState, useRef } from 'react';
-import gsap from 'gsap';
+import type { MouseEvent } from 'react';
+import { useEffect, useState } from 'react';
 
 const navLinks = [
-  { label: 'Esencia', href: '#philosophy' },
-  { label: 'Carta', href: '#menu' },
-  { label: 'Proceso', href: '#process' },
-  { label: 'Ambiente', href: '#ambience' },
-  { label: 'Equipo', href: '#team' },
-  { label: 'Visitanos', href: '#location' },
+  { label: 'Essence', href: '#philosophy' },
+  { label: 'Menu', href: '#menu' },
+  { label: 'Process', href: '#process' },
+  { label: 'Ambience', href: '#ambience' },
+  { label: 'Team', href: '#team' },
+  { label: 'Visit Us', href: '#location' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const navRef = useRef<HTMLElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -22,32 +20,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    if (navRef.current) {
-      gsap.fromTo(
-        navRef.current,
-        { y: -100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, delay: 0.3, ease: 'power3.out' }
-      );
-    }
-  }, []);
-
-  useEffect(() => {
-    if (mobileMenuRef.current && menuOpen) {
-      gsap.fromTo(
-        mobileMenuRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.4, ease: 'power2.out' }
-      );
-      gsap.fromTo(
-        mobileMenuRef.current.querySelectorAll('a'),
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out', delay: 0.1 }
-      );
-    }
-  }, [menuOpen]);
-
-  const handleAnchor = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleAnchor = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMenuOpen(false);
     const el = document.querySelector(href);
@@ -57,7 +30,6 @@ export default function Navbar() {
   return (
     <>
       <nav
-        ref={navRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? 'bg-cream/90 backdrop-blur-xl shadow-sm'
@@ -125,7 +97,6 @@ export default function Navbar() {
       {/* Mobile menu overlay */}
       {menuOpen && (
         <div
-          ref={mobileMenuRef}
           className="fixed inset-0 z-40 bg-mocha/98 backdrop-blur-xl flex flex-col items-center justify-center gap-6"
         >
           {navLinks.map((link) => (
