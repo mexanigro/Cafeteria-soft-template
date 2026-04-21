@@ -163,10 +163,28 @@ export const tattooPreset: NichePreset = {
     headlineLine2Italic: 'by design',
     intro:
       'Sessions can run for hours—we built the studio so your body and mind stay at ease while the work unfolds.',
-    bodyParagraphs: [
-      'Glass-front booths keep each appointment private without feeling closed off. Adjustable lighting lets artists see skin accurately while you relax in ergonomic seating that supports long sits.',
-      'Ventilation routes away from work surfaces; sterilization zones stay separate from lounge and reception. Between passes you will find water, tea, and genuine quiet—not a hectic waiting room.',
-      'The reception area doubles as a gallery wall for healed work and flash—so while you browse, you get a realistic sense of line weight and how pieces age.',
+    sectors: [
+      {
+        label: 'Glass booths',
+        body:
+          'Glass-front booths keep each appointment private without feeling closed off. Adjustable lighting lets artists see skin accurately while you relax in ergonomic seating that supports long sits.',
+        imageSrc: '/images/ambience/tattoo-sector-reception.jpg',
+        imageAlt: 'Minimal reception and waiting area with calm lighting',
+      },
+      {
+        label: 'Sterile workflow',
+        body:
+          'Ventilation routes away from work surfaces; sterilization zones stay separate from lounge and reception. Between passes you will find water, tea, and genuine quiet—not a hectic waiting room.',
+        imageSrc: '/images/ambience/tattoo-sector-station.jpg',
+        imageAlt: 'Clean tattoo workstation with organized tools',
+      },
+      {
+        label: 'Gallery wall',
+        body:
+          'The reception area doubles as a gallery wall for healed work and flash—so while you browse, you get a realistic sense of line weight and how pieces age.',
+        imageSrc: '/images/ambience/tattoo-sector-gallery.jpg',
+        imageAlt: 'Flash designs and reference art on display',
+      },
     ],
     gallery: [
       {
@@ -174,24 +192,32 @@ export const tattooPreset: NichePreset = {
         minHeightClass: 'h-full min-h-[300px] md:min-h-[500px]',
         bgClass: 'bg-matcha',
         label: 'Waiting area',
+        imageSrc: '/images/ambience/tattoo-sector-reception.jpg',
+        imageAlt: 'Studio lounge and welcome area',
       },
       {
         gridClass: '',
         minHeightClass: 'h-40 md:h-60',
         bgClass: 'bg-blush',
         label: 'Station',
+        imageSrc: '/images/ambience/tattoo-sector-station.jpg',
+        imageAlt: 'Tattoo station setup',
       },
       {
         gridClass: '',
         minHeightClass: 'h-40 md:h-60',
         bgClass: 'bg-stone/20',
         label: 'Flash wall',
+        imageSrc: '/images/ambience/tattoo-sector-gallery.jpg',
+        imageAlt: 'Flash art on the wall',
       },
       {
         gridClass: 'col-span-2',
         minHeightClass: 'h-40 md:h-52',
         bgClass: 'bg-caramel/20',
         label: 'Private room',
+        imageSrc: '/images/ambience/tattoo-gallery-private.jpg',
+        imageAlt: 'Private appointment space',
       },
     ],
   },

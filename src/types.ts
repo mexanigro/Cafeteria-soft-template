@@ -104,8 +104,20 @@ export interface ProcessConfig {
 export interface AmbienceGalleryCell {
   gridClass: string;
   minHeightClass?: string;
+  /** Fallback tint when imageSrc is omitted */
   bgClass: string;
   label: string;
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+/** One narrative block with its own photo (pairs alternate image/text in the UI) */
+export interface AmbienceSector {
+  /** Short anchor label (e.g. “Main hall”, “Coffee bar”) */
+  label: string;
+  body: string;
+  imageSrc: string;
+  imageAlt: string;
 }
 
 export interface AmbienceConfig {
@@ -114,8 +126,8 @@ export interface AmbienceConfig {
   headlineLine2Italic: string;
   /** Lead line under the headline */
   intro: string;
-  /** Supporting paragraphs that describe the space in depth */
-  bodyParagraphs: string[];
+  /** Space narrative in alternating image + text rows */
+  sectors: AmbienceSector[];
   gallery: AmbienceGalleryCell[];
 }
 

@@ -212,10 +212,28 @@ export const aromaVivoPreset: NichePreset = {
     headlineLine2Italic: 'your senses',
     intro:
       'Designed so every visit feels like a deliberate pause—from the moment you cross the threshold, the pace changes.',
-    bodyParagraphs: [
-      'Floor-to-ceiling light washes over pale oak tables and soft banquettes; walls wear warm neutrals so your eyes rest before your first sip. Nothing competes with the aroma from the bar: it travels through the room like an open invitation.',
-      'The coffee bar sits at the center—not as a barrier, but as a stage. You can watch weighing, grinding, and pouring without feeling rushed. High stools for a quick espresso, low lounge seats for lingering. Every chair was picked so you could sit comfortably for five minutes or fifty.',
-      'We treat sound with the same care as roast profiles: playlists stay low and unobtrusive; conversation rises and falls naturally. Around the perimeter, tucked corners with warm lamps welcome laptops, notebooks, or quiet conversation. Step away from the street noise—this room is built to slow you down.',
+    sectors: [
+      {
+        label: 'Main hall',
+        body:
+          'Floor-to-ceiling light washes over pale oak tables and soft banquettes; walls wear warm neutrals so your eyes rest before your first sip. Nothing competes with the aroma from the bar: it travels through the room like an open invitation.',
+        imageSrc: '/images/ambience/aroma-sector-main-hall.jpg',
+        imageAlt: 'Bright café interior with wooden tables and natural light',
+      },
+      {
+        label: 'Coffee bar',
+        body:
+          'The coffee bar sits at the center—not as a barrier, but as a stage. You can watch weighing, grinding, and pouring without feeling rushed. High stools for a quick espresso, low lounge seats for lingering. Every chair was picked so you could sit comfortably for five minutes or fifty.',
+        imageSrc: '/images/ambience/aroma-sector-bar.jpg',
+        imageAlt: 'Espresso bar with cups and brewing equipment',
+      },
+      {
+        label: 'Quiet corners',
+        body:
+          'We treat sound with the same care as roast profiles: playlists stay low and unobtrusive; conversation rises and falls naturally. Around the perimeter, tucked corners with warm lamps welcome laptops, notebooks, or quiet conversation. Step away from the street noise—this room is built to slow you down.',
+        imageSrc: '/images/ambience/aroma-sector-lounge.jpg',
+        imageAlt: 'Cozy café seating with soft light',
+      },
     ],
     gallery: [
       {
@@ -223,24 +241,32 @@ export const aromaVivoPreset: NichePreset = {
         minHeightClass: 'h-full min-h-[300px] md:min-h-[500px]',
         bgClass: 'bg-matcha',
         label: 'Main hall',
+        imageSrc: '/images/ambience/aroma-sector-main-hall.jpg',
+        imageAlt: 'Wide view of the main seating area',
       },
       {
         gridClass: '',
         minHeightClass: 'h-40 md:h-60',
         bgClass: 'bg-blush',
         label: 'Bar',
+        imageSrc: '/images/ambience/aroma-sector-bar.jpg',
+        imageAlt: 'Coffee bar close-up',
       },
       {
         gridClass: '',
         minHeightClass: 'h-40 md:h-60',
         bgClass: 'bg-stone/20',
         label: 'Details',
+        imageSrc: '/images/ambience/aroma-gallery-detail.jpg',
+        imageAlt: 'Coffee beans and craft details',
       },
       {
         gridClass: 'col-span-2',
         minHeightClass: 'h-40 md:h-52',
         bgClass: 'bg-caramel/20',
         label: 'Reading corner',
+        imageSrc: '/images/ambience/aroma-sector-lounge.jpg',
+        imageAlt: 'Quiet lounge seating',
       },
     ],
   },
