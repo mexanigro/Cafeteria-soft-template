@@ -1,57 +1,43 @@
-import { useEffect, useState } from 'react';
-import { site } from '@/src/config/site';
-import { Footer } from '@/src/components/landing/Footer';
-import { Gallery } from '@/src/components/landing/Gallery';
-import HeroSection from '@/src/components/landing/HeroSection';
-import { MobileMenu } from '@/src/components/landing/MobileMenu';
-import MenuSection from '@/src/components/landing/Menu';
-import { Navbar } from '@/src/components/landing/Navbar';
-import { ScrollToTop } from '@/src/components/landing/ScrollToTop';
-import { TheVibe } from '@/src/components/landing/TheVibe';
+import { useState, useCallback } from 'react';
+import { useSmoothScroll } from '@/src/hooks/useSmoothScroll';
+import SplashScreen from '@/src/sections/SplashScreen';
+import Navbar from '@/src/sections/Navbar';
+import Hero from '@/src/sections/Hero';
+import Philosophy from '@/src/sections/Philosophy';
+import MenuSection from '@/src/sections/Menu';
+import Process from '@/src/sections/Process';
+import Ambience from '@/src/sections/Ambience';
+import Testimonials from '@/src/sections/Testimonials';
+import Team from '@/src/sections/Team';
+import Location from '@/src/sections/Location';
+import Footer from '@/src/sections/Footer';
 
 export default function App() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+  useSmoothScroll();
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+  const handleSplashComplete = useCallback(() => {
+    setShowSplash(false);
   }, []);
 
-  const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-  const scrollTo = (id: string) => {
-    const el = document.querySelector(id);
-    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
   return (
-    <main className="overflow-x-hidden min-h-screen bg-background text-espresso selection:bg-primary font-sans">
-      <Navbar
-        brandName={site.brand.name}
-        isScrolled={isScrolled}
-        nav={site.nav}
-        vibeHref="#vibe"
-        visitHref="#visit"
-        onOpenFullMenu={() => scrollTo('#menu')}
-        onOpenOrder={() => scrollTo('#visit')}
-        mobileMenuOpen={mobileMenuOpen}
-        onToggleMobileMenu={() => setMobileMenuOpen((v) => !v)}
-      />
-      <HeroSection />
-      <TheVibe />
-      <MenuSection />
-      <Gallery />
-      <Footer onScrollTop={scrollTop} />
+    <>
+      {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
 
-      <MobileMenu
-        open={mobileMenuOpen}
-        onClose={() => setMobileMenuOpen(false)}
-        onOpenFullMenu={() => scrollTo('#menu')}
-        onOpenOrder={() => scrollTo('#visit')}
-      />
-
-      <ScrollToTop visible={isScrolled} />
-    </main>
+      <div className="grain-overlay">
+        <Navbar />
+        <main>
+          <Hero />
+          <Philosophy />
+          <MenuSection />
+          <Process />
+          <Ambience />
+          <Testimonials />
+          <Team />
+          <Location />
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }

@@ -1,26 +1,224 @@
-/*
-  Tailwind v4 entry: `@import "tailwindcss"` bundles base, components, and utilities.
-  (Legacy v3 used: @tailwind base; @tailwind components; @tailwind utilities;)
-*/
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
-/* Raw palette — single source for global CSS and Tailwind @theme */
-:root {
-  --palette-cream: #fdfbf7;
-  --palette-matcha: #e8ecd7;
-  --palette-blush: #fdebed;
-  --palette-espresso: #4a3b32;
-}
+/* ============================================
+   CAFETERIA BRAND TEMPLATE — Global Styles
+   ============================================ */
 
-/* Semantic colors + typography: bg-background, text-espresso, font-sans, etc. */
-@theme {
-  --color-background: var(--palette-cream);
-  --color-primary: var(--palette-matcha);
-  --color-blush: var(--palette-blush);
-  --color-espresso: var(--palette-espresso);
+/* --- Raw Palette --- */
+:root {
+  --color-cream: #fdfbf7;
+  --color-matcha: #e8ecd7;
+  --color-blush: #fdebed;
+  --color-espresso: #4a3b32;
+  --color-mocha: #2C1810;
+  --color-caramel: #D4A574;
+  --color-latte: #F5E6D3;
+  --color-stone: #8D6E63;
 
   --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
 }
 
+/* --- Tailwind Theme --- */
+@theme {
+  --color-cream: var(--color-cream);
+  --color-matcha: var(--color-matcha);
+  --color-blush: var(--color-blush);
+  --color-espresso: var(--color-espresso);
+  --color-mocha: var(--color-mocha);
+  --color-caramel: var(--color-caramel);
+  --color-latte: var(--color-latte);
+  --color-stone: var(--color-stone);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+}
+
+/* --- Base --- */
+html {
+  scroll-behavior: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cream);
+  color: var(--color-espresso);
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: var(--color-caramel);
+  color: var(--color-mocha);
+}
+
+/* --- Typography --- */
+.font-display {
+  font-family: var(--font-serif);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* --- Animations --- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes charReveal {
+  from { opacity: 0; transform: translateY(100%) rotate(3deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(0); }
+}
+
+@keyframes lineExpand {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10%      { transform: translate(-5%, -10%); }
+  30%      { transform: translate(3%, -15%); }
+  50%      { transform: translate(12%, 9%); }
+  70%      { transform: translate(9%, 4%); }
+  90%      { transform: translate(-1%, 7%); }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-charReveal {
+  animation: charReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-lineExpand {
+  animation: lineExpand 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: left;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* --- Grain Overlay --- */
+.grain-overlay::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200%;
+  background: transparent url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E") repeat;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain 8s steps(10) infinite;
+}
+
+/* --- Reveal utilities (GSAP) --- */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* --- Parallax layers --- */
+.parallax-slow {
+  will-change: transform;
+}
+
+/* --- Custom scrollbar --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-caramel);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-espresso);
+}
