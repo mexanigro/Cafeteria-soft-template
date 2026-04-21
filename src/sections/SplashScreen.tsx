@@ -24,7 +24,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-mocha transition-transform duration-700 ease-in-out ${
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-mocha will-change-transform transition-transform duration-700 ease-in-out motion-reduce:transition-none ${
         isExiting ? '-translate-y-full' : 'translate-y-0'
       }`}
     >

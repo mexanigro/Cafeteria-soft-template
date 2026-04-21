@@ -87,22 +87,17 @@ body {
   animation: grain 8s steps(10) infinite;
 }
 
+.grain-paused::before {
+  animation: none;
+}
+
 /* Defer heavy offscreen section layout/paint in Chromium-based browsers */
 [data-defer-render="true"] {
   content-visibility: auto;
   contain-intrinsic-size: 1px 900px;
 }
 
-/* Keep fixed hero effect on desktop, avoid repaint cost on mobile */
-.hero-fixed-bg {
-  background-attachment: fixed;
-}
-
 @media (max-width: 1024px) {
-  .hero-fixed-bg {
-    background-attachment: scroll;
-  }
-
   .grain-overlay::before {
     animation: none;
     opacity: 0.015;

@@ -21,7 +21,7 @@ export default function App() {
   return (
     <>
       {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-      <div className="grain-overlay">
+      <div className={`grain-overlay ${showSplash ? 'grain-paused' : ''}`}>
         <Navbar />
         <main>
           <Hero />
