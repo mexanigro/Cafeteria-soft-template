@@ -15,6 +15,13 @@ export const tattooPreset: NichePreset = {
       'Custom tattoos and fine line work. Book a consultation and wear your story with pride.',
   },
 
+  legal: {
+    legalName: 'Ink Atelier LLC',
+    registeredAddress: '123 Creative Lane, Art District 10001, United States',
+    contactEmail: 'book@inkatelier.example',
+    cancellationNotice: '48 hours before the scheduled session',
+  },
+
   seo: {
     htmlLang: 'en',
     title: 'Ink Atelier — Custom Tattoos',

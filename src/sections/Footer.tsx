@@ -1,6 +1,7 @@
 import { Instagram, Facebook } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { siteConfig } from '@/src/config/site';
+import { LEGAL_ROUTES, type LegalDocKind } from '@/src/config/legalContent';
 import type { SocialPlatform } from '@/src/types';
 
 const SOCIAL_ICONS: Record<SocialPlatform, typeof Instagram> = {
@@ -8,7 +9,11 @@ const SOCIAL_ICONS: Record<SocialPlatform, typeof Instagram> = {
   facebook: Facebook,
 };
 
-export default function Footer() {
+export default function Footer({
+  onLegalNavigate,
+}: {
+  onLegalNavigate: (kind: LegalDocKind) => void;
+}) {
   const { footer, brand } = siteConfig;
 
   const handleAnchor = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -73,11 +78,35 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-latte/5 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-latte/20 text-xs">
-            &copy; {new Date().getFullYear()} {brand.displayName}. {footer.copyrightSuffix}
-          </p>
-          <p className="text-latte/20 text-xs">{footer.craftedLine}</p>
+        <div className="pt-8 border-t border-latte/5 space-y-5">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-start">
+            {(
+              [
+                ['Privacy', 'privacy'],
+                ['Terms', 'terms'],
+                ['Cancellation', 'cancellation'],
+                ['Cookies', 'cookies'],
+              ] as const
+            ).map(([label, kind]) => (
+              <a
+                key={kind}
+                href={LEGAL_ROUTES[kind]}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onLegalNavigate(kind);
+                }}
+                className="text-latte/35 text-[11px] uppercase tracking-[0.15em] hover:text-caramel transition-colors duration-300"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-latte/20 text-xs">
+              &copy; {new Date().getFullYear()} {brand.displayName}. {footer.copyrightSuffix}
+            </p>
+            <p className="text-latte/20 text-xs">{footer.craftedLine}</p>
+          </div>
         </div>
       </div>
     </footer>

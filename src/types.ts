@@ -212,6 +212,17 @@ export interface AssetsConfig {
   preloadHeroImage: boolean;
 }
 
+/** Data controller / legal footer interpolations for policies */
+export interface LegalBusinessConfig {
+  /** Registered entity or legal name */
+  legalName: string;
+  /** Single-line mailing address */
+  registeredAddress: string;
+  contactEmail: string;
+  /** Notice period text, e.g. "24 hours before your reservation" */
+  cancellationNotice: string;
+}
+
 /**
  * Everything that changes per client / vertical.
  * Must be complete for TypeScript to catch missing fields when adding a preset.
@@ -219,6 +230,7 @@ export interface AssetsConfig {
 export interface NichePreset {
   id: string;
   brand: BrandConfig;
+  legal: LegalBusinessConfig;
   seo: SeoConfig;
   splash: SplashConfig;
   hero: HeroConfig;

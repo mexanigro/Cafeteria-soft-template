@@ -1,9 +1,18 @@
-import { Suspense, lazy, useCallback, useState } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import { siteConfig } from '@/src/config/site';
 import { SeoHead } from '@/src/components/SeoHead';
+import { LegalPage } from '@/src/components/LegalPage';
 import Navbar from '@/src/sections/Navbar';
 import Hero from '@/src/sections/Hero';
 import SplashScreen from '@/src/sections/SplashScreen';
+import {
+  legalKindToPath,
+  parseLegalFromPath,
+  type LegalDocKind,
+} from '@/src/config/legalContent';
+
+import '@/src/lib/firebase';
+
 const Philosophy = lazy(() => import('@/src/sections/Philosophy'));
 const MenuSection = lazy(() => import('@/src/sections/Menu'));
 const Process = lazy(() => import('@/src/sections/Process'));
@@ -13,19 +22,64 @@ const Team = lazy(() => import('@/src/sections/Team'));
 const Location = lazy(() => import('@/src/sections/Location'));
 const Footer = lazy(() => import('@/src/sections/Footer'));
 
+function initialLegalKind(): LegalDocKind | null {
+  if (typeof window === 'undefined') return null;
+  return parseLegalFromPath(window.location.pathname);
+}
+
 export default function App() {
-  const [splashDismissed, setSplashDismissed] = useState(
-    !siteConfig.features.showSplash
-  );
+  const initialLegal = initialLegalKind();
+  const [legalKind, setLegalKind] = useState<LegalDocKind | null>(() => initialLegal);
+
+  const [splashDismissed, setSplashDismissed] = useState(() => !!initialLegal || !siteConfig.features.showSplash);
+
+  useEffect(() => {
+    const onPop = () => setLegalKind(parseLegalFromPath(window.location.pathname));
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  useEffect(() => {
+    if (!legalKind) {
+      document.title = siteConfig.seo.title;
+    }
+  }, [legalKind]);
+
+  const navigateLegal = useCallback((kind: LegalDocKind) => {
+    window.history.pushState({}, '', legalKindToPath(kind));
+    setLegalKind(kind);
+    window.scrollTo(0, 0);
+  }, []);
+
+  const goHome = useCallback(() => {
+    window.history.pushState({}, '', '/');
+    setLegalKind(null);
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleSplashComplete = useCallback(() => {
     setSplashDismissed(true);
   }, []);
 
-  const splashVisible =
-    siteConfig.features.showSplash && !splashDismissed;
-  const pauseGrain =
-    splashVisible && siteConfig.features.pauseGrainDuringSplash;
+  const splashVisible = siteConfig.features.showSplash && !splashDismissed;
+  const pauseGrain = splashVisible && siteConfig.features.pauseGrainDuringSplash;
+
+  if (legalKind) {
+    return (
+      <>
+        <SeoHead />
+        <div className="min-h-screen bg-cream grain-overlay">
+          <Navbar legalMode onGoHome={goHome} />
+          <main>
+            <LegalPage kind={legalKind} onBack={goHome} />
+          </main>
+          <Suspense fallback={<div className="h-24" aria-hidden="true" />}>
+            <Footer onLegalNavigate={navigateLegal} />
+          </Suspense>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -61,7 +115,7 @@ export default function App() {
             <Testimonials />
             <Team />
             <Location />
-            <Footer />
+            <Footer onLegalNavigate={navigateLegal} />
           </Suspense>
         </main>
       </div>

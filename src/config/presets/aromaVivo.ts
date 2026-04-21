@@ -11,6 +11,13 @@ export const aromaVivoPreset: NichePreset = {
       'Specialty coffee roasted in small batches. Every cup is a ceremony of flavor and craft.',
   },
 
+  legal: {
+    legalName: 'Aroma Vivo',
+    registeredAddress: 'Av. del Libertador 2840, Palermo, C1425 Buenos Aires, Argentina',
+    contactEmail: 'hello@aromavivo.example',
+    cancellationNotice: '24 hours before the reserved time',
+  },
+
   seo: {
     htmlLang: 'en',
     title: 'Aroma Vivo — Specialty Coffee',
