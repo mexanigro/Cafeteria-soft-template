@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { siteConfig } from '@/src/config/site';
 
 interface SplashScreenProps {
   onComplete: () => void;
@@ -6,21 +7,22 @@ interface SplashScreenProps {
 
 export default function SplashScreen({ onComplete }: SplashScreenProps) {
   const [isExiting, setIsExiting] = useState(false);
+  const { splash, brand } = siteConfig;
 
   useEffect(() => {
     const startExit = window.setTimeout(() => {
       setIsExiting(true);
-    }, 1500);
+    }, splash.exitAfterMs);
 
     const finish = window.setTimeout(() => {
       onComplete();
-    }, 2100);
+    }, splash.completeAfterMs);
 
     return () => {
       window.clearTimeout(startExit);
       window.clearTimeout(finish);
     };
-  }, [onComplete]);
+  }, [onComplete, splash.completeAfterMs, splash.exitAfterMs]);
 
   return (
     <div
@@ -29,10 +31,10 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
       }`}
     >
       <div className="text-center">
-        <p className="text-xs tracking-[8px] uppercase text-caramel/70">Specialty Coffee</p>
+        <p className="text-xs tracking-[8px] uppercase text-caramel/70">{splash.subtitle}</p>
         <h1 className="mt-6 font-serif text-6xl md:text-8xl leading-[0.95] text-latte">
-          Aroma
-          <span className="block italic text-caramel">Vivo</span>
+          {brand.splashTitleLine1}
+          <span className="block italic text-caramel">{brand.splashTitleLine2}</span>
         </h1>
       </div>
     </div>

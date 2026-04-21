@@ -1,27 +1,8 @@
-const steps = [
-  {
-    number: '01',
-    title: 'Selection',
-    desc: 'We choose beans from top farms in Colombia, Ethiopia, and Brazil. Only the top 1% pass our quality filter.',
-  },
-  {
-    number: '02',
-    title: 'Artisan Roasting',
-    desc: 'Every batch is hand-roasted while temperature and time are monitored with precision.',
-  },
-  {
-    number: '03',
-    title: 'Controlled Rest',
-    desc: 'Beans rest for 48 hours in a climate-controlled room so oils stabilize and flavors concentrate.',
-  },
-  {
-    number: '04',
-    title: 'Perfect Extraction',
-    desc: 'Our baristas calibrate temperature, grind, and pressure to extract the best from each origin.',
-  },
-];
+import { siteConfig } from '@/src/config/site';
 
 export default function Process() {
+  const { process } = siteConfig;
+
   return (
     <section
       id="process"
@@ -32,8 +13,8 @@ export default function Process() {
         <div className="relative">
           <div className="relative rounded-3xl overflow-hidden aspect-[4/5]">
             <img
-              src="/images/process-roast.jpg"
-              alt="Coffee roasting process"
+              src={process.imageSrc}
+              alt={process.imageAlt}
               className="w-full h-full object-cover"
               loading="lazy"
               decoding="async"
@@ -42,8 +23,8 @@ export default function Process() {
 
             <div className="absolute bottom-6 left-6 right-6">
               <div className="bg-mocha/80 backdrop-blur-sm rounded-xl px-5 py-4 border border-latte/10">
-                <p className="text-latte font-serif text-lg">Small-Batch Roasting</p>
-                <p className="text-latte/50 text-sm mt-1">Craft control at every step</p>
+                <p className="text-latte font-serif text-lg">{process.floatCardTitle}</p>
+                <p className="text-latte/50 text-sm mt-1">{process.floatCardSubtitle}</p>
               </div>
             </div>
           </div>
@@ -52,21 +33,16 @@ export default function Process() {
         </div>
 
         <div>
-          <p className="text-xs tracking-[6px] uppercase text-caramel mb-6">
-            From Farm to Cup
-          </p>
+          <p className="text-xs tracking-[6px] uppercase text-caramel mb-6">{process.sectionLabel}</p>
           <h2 className="font-serif text-4xl md:text-5xl text-latte leading-[1.1] mb-6">
-            A mindful
+            {process.headlineLine1}
             <br />
-            <span className="italic text-caramel">process</span>
+            <span className="italic text-caramel">{process.headlineLine2Italic}</span>
           </h2>
-          <p className="text-latte/60 text-lg leading-relaxed mb-12 max-w-md">
-            This is more than coffee. It is a chain of deliberate decisions
-            that respect the bean, the farmer, and the person drinking it.
-          </p>
+          <p className="text-latte/60 text-lg leading-relaxed mb-12 max-w-md">{process.intro}</p>
 
           <div className="space-y-8">
-            {steps.map((step) => (
+            {process.steps.map((step) => (
               <div key={step.number} className="step-item flex gap-5 group">
                 <span className="text-caramel/30 font-serif text-3xl group-hover:text-caramel/60 transition-colors duration-300 flex-shrink-0 w-12">
                   {step.number}
@@ -75,9 +51,7 @@ export default function Process() {
                   <h3 className="font-serif text-xl text-latte mb-2 group-hover:text-caramel transition-colors duration-300">
                     {step.title}
                   </h3>
-                  <p className="text-latte/50 text-sm leading-relaxed">
-                    {step.desc}
-                  </p>
+                  <p className="text-latte/50 text-sm leading-relaxed">{step.description}</p>
                 </div>
               </div>
             ))}

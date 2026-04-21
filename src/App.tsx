@@ -1,4 +1,6 @@
 import { Suspense, lazy, useCallback, useState } from 'react';
+import { siteConfig } from '@/src/config/site';
+import { SeoHead } from '@/src/components/SeoHead';
 import Navbar from '@/src/sections/Navbar';
 import Hero from '@/src/sections/Hero';
 import SplashScreen from '@/src/sections/SplashScreen';
@@ -12,32 +14,33 @@ const Location = lazy(() => import('@/src/sections/Location'));
 const Footer = lazy(() => import('@/src/sections/Footer'));
 
 export default function App() {
-  const [showSplash, setShowSplash] = useState(true);
+  const [splashDismissed, setSplashDismissed] = useState(
+    !siteConfig.features.showSplash
+  );
 
   const handleSplashComplete = useCallback(() => {
-    setShowSplash(false);
+    setSplashDismissed(true);
   }, []);
+
+  const splashVisible =
+    siteConfig.features.showSplash && !splashDismissed;
+  const pauseGrain =
+    splashVisible && siteConfig.features.pauseGrainDuringSplash;
 
   return (
     <>
-      {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-      <div className={`grain-overlay ${showSplash ? 'grain-paused' : ''}`}>
+      <SeoHead />
+      {splashVisible && <SplashScreen onComplete={handleSplashComplete} />}
+      <div className={`grain-overlay ${pauseGrain ? 'grain-paused' : ''}`}>
         <Navbar />
         <main>
-          {/*
-           * This wrapper holds the shared sticky background image.
-           * The image stays fixed at the top of the viewport while the user
-           * scrolls through Hero, Philosophy, and Menu. Once past Menu, the
-           * wrapper ends and the image is no longer visible.
-           */}
           <div className="relative">
-            {/* Sticky background — takes no height, image always at viewport top */}
             <div
               className="sticky top-0 h-0 w-full pointer-events-none overflow-visible"
               aria-hidden="true"
             >
               <img
-                src="/images/hero-bg.jpg"
+                src={siteConfig.assets.heroBackground}
                 alt=""
                 className="absolute top-0 left-0 h-screen w-full object-cover"
                 fetchPriority="high"
@@ -45,7 +48,6 @@ export default function App() {
               />
             </div>
 
-            {/* Sections scroll over the fixed background */}
             <Hero />
             <Suspense fallback={null}>
               <Philosophy />
@@ -53,7 +55,6 @@ export default function App() {
             </Suspense>
           </div>
 
-          {/* Remaining sections have their own solid backgrounds */}
           <Suspense fallback={<div className="h-24" aria-hidden="true" />}>
             <Process />
             <Ambience />

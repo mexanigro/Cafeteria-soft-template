@@ -1,12 +1,9 @@
 import { MapPin, Clock, Phone } from 'lucide-react';
-
-const hours = [
-  { day: 'Monday - Friday', time: '07:00 - 20:00' },
-  { day: 'Saturday', time: '08:00 - 21:00' },
-  { day: 'Sunday', time: '09:00 - 18:00' },
-];
+import { siteConfig } from '@/src/config/site';
 
 export default function Location() {
+  const { location } = siteConfig;
+
   return (
     <section
       id="location"
@@ -15,20 +12,15 @@ export default function Location() {
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
         <div>
-          <p className="text-xs tracking-[6px] uppercase text-caramel mb-8">
-            Visit Us
-          </p>
+          <p className="text-xs tracking-[6px] uppercase text-caramel mb-8">{location.sectionLabel}</p>
 
           <h2 className="font-serif text-4xl md:text-5xl text-latte leading-[1.1] mb-8">
-            We are ready
+            {location.headlineLine1}
             <br />
-            <span className="italic text-caramel">with your cup</span>
+            <span className="italic text-caramel">{location.headlineLine2Italic}</span>
           </h2>
 
-          <p className="text-latte/60 text-lg leading-relaxed mb-12 max-w-md">
-            Come and meet us. Whether you need a quick espresso or a quiet
-            reading afternoon, we have the right spot for you.
-          </p>
+          <p className="text-latte/60 text-lg leading-relaxed mb-12 max-w-md">{location.intro}</p>
 
           <div className="space-y-8">
             <div className="flex items-start gap-4">
@@ -36,11 +28,11 @@ export default function Location() {
                 <MapPin className="w-4 h-4 text-caramel" />
               </div>
               <div>
-                <p className="text-latte font-medium mb-1">Address</p>
+                <p className="text-latte font-medium mb-1">{location.addressLabel}</p>
                 <p className="text-latte/50 text-sm leading-relaxed">
-                  Av. del Libertador 2840,
-                  <br />
-                  Palermo, Buenos Aires
+                  {location.addressLines.flatMap((line, i) =>
+                    i === 0 ? [line] : [<br key={`br-${i}`} />, line]
+                  )}
                 </p>
               </div>
             </div>
@@ -50,9 +42,9 @@ export default function Location() {
                 <Clock className="w-4 h-4 text-caramel" />
               </div>
               <div>
-                <p className="text-latte font-medium mb-3">Opening Hours</p>
+                <p className="text-latte font-medium mb-3">{location.hoursLabel}</p>
                 <div className="space-y-2">
-                  {hours.map((h) => (
+                  {location.hours.map((h) => (
                     <div key={h.day} className="hour-row flex justify-between text-sm">
                       <span className="text-latte/50">{h.day}</span>
                       <span className="text-latte/70 tabular-nums">{h.time}</span>
@@ -67,10 +59,8 @@ export default function Location() {
                 <Phone className="w-4 h-4 text-caramel" />
               </div>
               <div>
-                <p className="text-latte font-medium mb-1">Contact</p>
-                <p className="text-latte/50 text-sm">
-                  +54 11 4567-8901
-                </p>
+                <p className="text-latte font-medium mb-1">{location.contactLabel}</p>
+                <p className="text-latte/50 text-sm">{location.phone}</p>
               </div>
             </div>
           </div>
@@ -110,27 +100,28 @@ export default function Location() {
                       <MapPin className="w-3 h-3 text-mocha" />
                     </div>
                   </div>
-                  <div className="absolute inset-0 rounded-full bg-caramel/10 animate-ping" style={{ animationDuration: '2s' }} />
+                  <div
+                    className="absolute inset-0 rounded-full bg-caramel/10 animate-ping"
+                    style={{ animationDuration: '2s' }}
+                  />
                 </div>
               </div>
 
               <span className="absolute top-[46%] left-[2%] text-[10px] text-latte/20 tracking-wider uppercase">
-                Av. Libertador
+                {location.mapStreetLabels.top}
               </span>
               <span className="absolute top-[72%] left-[2%] text-[10px] text-latte/20 tracking-wider uppercase">
-                Av. Cnel. Diaz
+                {location.mapStreetLabels.mid}
               </span>
               <span className="absolute top-[2%] left-[36%] text-[10px] text-latte/20 tracking-wider uppercase rotate-90 origin-left">
-                C. Olleros
+                {location.mapStreetLabels.vertical}
               </span>
             </div>
 
             <div className="absolute bottom-6 left-6 right-6">
               <div className="bg-mocha/90 backdrop-blur-sm rounded-xl px-5 py-4 border border-latte/10">
-                <p className="text-latte font-medium text-sm">Aroma Vivo</p>
-                <p className="text-latte/50 text-xs mt-1">
-                  Palermo, Buenos Aires
-                </p>
+                <p className="text-latte font-medium text-sm">{location.mapCardTitle}</p>
+                <p className="text-latte/50 text-xs mt-1">{location.mapCardSubtitle}</p>
               </div>
             </div>
           </div>

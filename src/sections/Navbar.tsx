@@ -1,18 +1,12 @@
 import type { MouseEvent } from 'react';
 import { useEffect, useState } from 'react';
-
-const navLinks = [
-  { label: 'Essence', href: '#philosophy' },
-  { label: 'Menu', href: '#menu' },
-  { label: 'Process', href: '#process' },
-  { label: 'Ambience', href: '#ambience' },
-  { label: 'Team', href: '#team' },
-  { label: 'Visit Us', href: '#location' },
-];
+import { siteConfig } from '@/src/config/site';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { links } = siteConfig.navbar;
+  const brand = siteConfig.brand.displayName;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -37,7 +31,6 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
-          {/* Brand */}
           <a
             href="#"
             onClick={(e) => {
@@ -48,12 +41,11 @@ export default function Navbar() {
               scrolled ? 'text-espresso' : 'text-latte'
             }`}
           >
-            Aroma Vivo
+            {brand}
           </a>
 
-          {/* Desktop links */}
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
@@ -67,7 +59,6 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className={`lg:hidden relative w-6 h-5 flex flex-col justify-between transition-colors ${
@@ -94,12 +85,9 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile menu overlay */}
       {menuOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-mocha/98 backdrop-blur-xl flex flex-col items-center justify-center gap-6"
-        >
-          {navLinks.map((link) => (
+        <div className="fixed inset-0 z-40 bg-mocha/98 backdrop-blur-xl flex flex-col items-center justify-center gap-6">
+          {links.map((link) => (
             <a
               key={link.href}
               href={link.href}

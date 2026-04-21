@@ -1,20 +1,21 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Cafeteria soft template (Vite + React)
 
-# Run and deploy your AI Studio app
+## Configuration
 
-This contains everything you need to run your app locally.
+Business content is driven by **`src/config/site.ts`** and the active preset in **`src/config/presets/`**.
 
-View your app in AI Studio: https://ai.studio/apps/7c223480-e640-4ee6-a826-32cf0888ce51
+- Change **`ACTIVE_NICHE`** in `src/config/site.ts` to switch client or vertical (e.g. `aromaVivo`, `tattoo`).
+- Final config is **`siteConfig`**: preset content first, then **`BASE_CONFIG`** (features, payment, notifications, admin email). Infrastructure always wins on duplicate keys.
+- Add a new client: copy an existing preset file in `src/config/presets/`, fill every field (TypeScript enforces the contract via `src/types.ts`), register it in the `PRESETS` map, and set `ACTIVE_NICHE`.
+- Optional legal copy: **`src/config/legalContent.ts`** with placeholders like `[BRAND_NAME]` and `interpolateLegalPlaceholders`.
 
-## Run Locally
+After load, **`SeoHead`** updates `document.title` and meta tags from the active preset’s `seo` block and syncs the hero image preload when enabled.
 
-**Prerequisites:**  Node.js
+## Run locally
 
+**Prerequisites:** Node.js
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1. `npm install`
+2. `npm run dev`
+
+Build: `npm run build`
