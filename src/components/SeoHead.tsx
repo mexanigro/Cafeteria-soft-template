@@ -18,6 +18,16 @@ export function SeoHead() {
       el.setAttribute('content', content);
     };
 
+    const upsertCanonical = (href: string) => {
+      let link = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+      if (!link) {
+        link = document.createElement('link');
+        link.setAttribute('rel', 'canonical');
+        document.head.appendChild(link);
+      }
+      link.setAttribute('href', href);
+    };
+
     upsertMeta('name', 'description', seo.description);
     upsertMeta('name', 'theme-color', seo.themeColor);
     upsertMeta('name', 'author', seo.author);
@@ -27,7 +37,12 @@ export function SeoHead() {
     upsertMeta('property', 'og:type', 'website');
 
     const origin = window.location.origin;
+    const canonicalUrl = `${origin}/`;
     const ogImageUrl = `${origin}/og-image.png`;
+
+    upsertCanonical(canonicalUrl);
+    upsertMeta('property', 'og:url', canonicalUrl);
+
     upsertMeta('property', 'og:image', ogImageUrl);
     upsertMeta('property', 'og:image:width', '1200');
     upsertMeta('property', 'og:image:height', '630');
