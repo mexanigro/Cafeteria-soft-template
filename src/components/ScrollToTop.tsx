@@ -1,27 +1,13 @@
-import { useEffect, useState } from 'react';
 import { ChevronUp } from 'lucide-react';
 
-const SHOW_AFTER_PX = 380;
-
-/** Floating control: appears after scrolling down; smooth-scrolls to top. Placed bottom-left so it stays clear of the Gemini chat FAB (bottom-right). */
-export function ScrollToTop() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > SHOW_AFTER_PX);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  if (!visible) return null;
-
+/** Arrow control only (positioning lives in `FloatingDock`). */
+export function ScrollToTopButton() {
   return (
     <button
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Back to top"
-      className="group fixed bottom-6 left-6 z-[60] flex h-12 w-12 items-center justify-center rounded-full border border-caramel/35 bg-cream/90 text-espresso shadow-[0_8px_30px_-8px_rgba(44,24,16,0.35)] backdrop-blur-md transition-all duration-300 hover:border-caramel/70 hover:bg-cream hover:text-caramel hover:shadow-[0_12px_36px_-10px_rgba(74,59,50,0.45)] active:scale-95 md:bottom-8 md:left-8"
+      className="group relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-caramel/35 bg-cream/90 text-espresso shadow-[0_8px_30px_-8px_rgba(44,24,16,0.35)] backdrop-blur-md transition-all duration-300 hover:border-caramel/70 hover:bg-cream hover:text-caramel hover:shadow-[0_12px_36px_-10px_rgba(74,59,50,0.45)] active:scale-95"
     >
       <ChevronUp
         strokeWidth={2.25}

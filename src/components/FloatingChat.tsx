@@ -93,25 +93,14 @@ export function FloatingChat() {
   if (!siteConfig.features.showGeminiChat) return null;
 
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-6 right-6 z-[70] flex h-14 w-14 items-center justify-center rounded-full bg-espresso text-cream shadow-lg transition-transform hover:scale-105 hover:bg-mocha active:scale-95"
-        aria-expanded={open}
-        aria-controls={panelId}
-        aria-label={open ? 'Close assistant' : 'Open assistant'}
-      >
-        {open ? <X className="h-6 w-6" aria-hidden /> : <MessageCircle className="h-6 w-6" aria-hidden />}
-      </button>
-
+    <div className="relative flex flex-col items-end">
       {open && (
         <div
           id={panelId}
           role="dialog"
           aria-modal="true"
           aria-label="Assistant chat"
-          className="fixed bottom-24 right-6 z-[70] flex w-[min(100vw-3rem,22rem)] max-h-[min(70vh,520px)] flex-col overflow-hidden rounded-2xl border border-espresso/10 bg-cream shadow-2xl"
+          className="absolute bottom-full right-0 z-[80] mb-3 flex w-[min(100vw-3rem,22rem)] max-h-[min(70vh,520px)] flex-col overflow-hidden rounded-2xl border border-espresso/10 bg-cream shadow-2xl"
         >
           <div className="border-b border-espresso/10 bg-mocha px-4 py-3">
             <p className="font-serif text-lg text-latte">{siteConfig.brand.displayName}</p>
@@ -176,6 +165,17 @@ export function FloatingChat() {
           </form>
         </div>
       )}
-    </>
+
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="relative z-[75] flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-espresso text-cream shadow-lg transition-transform hover:scale-105 hover:bg-mocha active:scale-95"
+        aria-expanded={open}
+        aria-controls={panelId}
+        aria-label={open ? 'Close assistant' : 'Open assistant'}
+      >
+        {open ? <X className="h-6 w-6" aria-hidden /> : <MessageCircle className="h-6 w-6" aria-hidden />}
+      </button>
+    </div>
   );
 }

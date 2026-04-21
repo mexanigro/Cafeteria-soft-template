@@ -2,8 +2,7 @@ import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import { siteConfig } from '@/src/config/site';
 import { SeoHead } from '@/src/components/SeoHead';
 import { LegalPage } from '@/src/components/LegalPage';
-import { FloatingChat } from '@/src/components/FloatingChat';
-import { ScrollToTop } from '@/src/components/ScrollToTop';
+import { FloatingDock } from '@/src/components/FloatingDock';
 import Navbar from '@/src/sections/Navbar';
 import Hero from '@/src/sections/Hero';
 import SplashScreen from '@/src/sections/SplashScreen';
@@ -136,8 +135,7 @@ export default function App() {
         </>
       )}
 
-      <FloatingChat />
-      <ScrollToTop />
+      <FloatingDock />
     </>
   );
 }
