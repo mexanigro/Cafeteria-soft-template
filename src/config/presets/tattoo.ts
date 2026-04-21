@@ -162,9 +162,12 @@ export const tattooPreset: NichePreset = {
     headlineLine1: 'Calm',
     headlineLine2Italic: 'by design',
     intro:
-      'Natural light, sound-dampened booths, and a relaxed pace—built for long sessions.',
-    atmosphereLabel: 'Studio vibe',
-    notes: ['Private booths', 'Natural light', 'Quiet music', 'Tea & water'],
+      'Sessions can run for hours—we built the studio so your body and mind stay at ease while the work unfolds.',
+    bodyParagraphs: [
+      'Glass-front booths keep each appointment private without feeling closed off. Adjustable lighting lets artists see skin accurately while you relax in ergonomic seating that supports long sits.',
+      'Ventilation routes away from work surfaces; sterilization zones stay separate from lounge and reception. Between passes you will find water, tea, and genuine quiet—not a hectic waiting room.',
+      'The reception area doubles as a gallery wall for healed work and flash—so while you browse, you get a realistic sense of line weight and how pieces age.',
+    ],
     gallery: [
       {
         gridClass: 'col-span-2 row-span-2',

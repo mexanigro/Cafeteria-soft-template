@@ -112,9 +112,10 @@ export interface AmbienceConfig {
   sectionLabel: string;
   headlineLine1: string;
   headlineLine2Italic: string;
+  /** Lead line under the headline */
   intro: string;
-  atmosphereLabel: string;
-  notes: string[];
+  /** Supporting paragraphs that describe the space in depth */
+  bodyParagraphs: string[];
   gallery: AmbienceGalleryCell[];
 }
 

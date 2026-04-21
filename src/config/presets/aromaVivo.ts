@@ -211,15 +211,11 @@ export const aromaVivoPreset: NichePreset = {
     headlineLine1: 'A refuge for',
     headlineLine2Italic: 'your senses',
     intro:
-      'Designed so every visit feels like a pause. Natural light, warm textures, and corners that invite you to stay.',
-    atmosphereLabel: 'What you will feel',
-    notes: [
-      'Warm wood',
-      'Golden light',
-      'Inviting aromas',
-      'Soft music',
-      'Good conversations',
-      'Comfortable silence',
+      'Designed so every visit feels like a deliberate pause—from the moment you cross the threshold, the pace changes.',
+    bodyParagraphs: [
+      'Floor-to-ceiling light washes over pale oak tables and soft banquettes; walls wear warm neutrals so your eyes rest before your first sip. Nothing competes with the aroma from the bar: it travels through the room like an open invitation.',
+      'The coffee bar sits at the center—not as a barrier, but as a stage. You can watch weighing, grinding, and pouring without feeling rushed. High stools for a quick espresso, low lounge seats for lingering. Every chair was picked so you could sit comfortably for five minutes or fifty.',
+      'We treat sound with the same care as roast profiles: playlists stay low and unobtrusive; conversation rises and falls naturally. Around the perimeter, tucked corners with warm lamps welcome laptops, notebooks, or quiet conversation. Step away from the street noise—this room is built to slow you down.',
     ],
     gallery: [
       {
