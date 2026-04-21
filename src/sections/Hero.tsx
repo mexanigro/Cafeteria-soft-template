@@ -6,7 +6,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative h-[250vh] sm:h-[240vh] md:h-[210vh] lg:h-[170vh] xl:h-[130vh] w-full"
+      className="relative h-screen lg:h-[170vh] xl:h-[130vh] w-full"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <img
@@ -65,7 +65,7 @@ export default function Hero() {
       <div className="absolute bottom-8 left-8 w-12 h-12 border-l border-b border-latte/10 z-10" />
       <div className="absolute bottom-8 right-8 w-12 h-12 border-r border-b border-latte/10 z-10" />
 
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-cream to-transparent z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-cream to-transparent z-10 hidden lg:block" />
     </section>
   );
 }
