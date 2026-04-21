@@ -1,100 +1,12 @@
 import { useRef, useState, type MouseEvent } from 'react';
-
-type MenuCategory = 'todos' | 'calientes' | 'frios' | 'postres';
-
-type MenuItem = {
-  id: number;
-  name: string;
-  category: Exclude<MenuCategory, 'todos'>;
-  price: string;
-  description: string;
-  color: string;
-};
-
-type MenuCategoryFilter = {
-  key: MenuCategory;
-  label: string;
-};
-
-const menuItems: MenuItem[] = [
-  {
-    id: 1,
-    name: 'Espresso Clasico',
-    category: 'calientes',
-    price: '$3.50',
-    description: 'Intenso, cremoso y con cuerpo. El alma del cafe.',
-    color: '#3E2723',
-  },
-  {
-    id: 2,
-    name: 'Cappuccino Soft',
-    category: 'calientes',
-    price: '$4.20',
-    description: 'Espuma de nube sobre espresso doble.',
-    color: '#6F4E37',
-  },
-  {
-    id: 3,
-    name: 'Cold Brew',
-    category: 'frios',
-    price: '$4.50',
-    description: '12 horas de extraccion fria. Suave y dulce.',
-    color: '#4E342E',
-  },
-  {
-    id: 4,
-    name: 'Flat White',
-    category: 'calientes',
-    price: '$4.00',
-    description: 'Microespuma sedosa sobre doble ristretto.',
-    color: '#5D4037',
-  },
-  {
-    id: 5,
-    name: 'Iced Latte',
-    category: 'frios',
-    price: '$4.80',
-    description: 'Hielo, leche cremosa y espresso balanceado.',
-    color: '#8D6E63',
-  },
-  {
-    id: 6,
-    name: 'Tiramisu Casero',
-    category: 'postres',
-    price: '$5.50',
-    description: 'Capas de cafe, mascarpone y cacao.',
-    color: '#3E2723',
-  },
-  {
-    id: 7,
-    name: 'Cheesecake de Caramelo',
-    category: 'postres',
-    price: '$5.00',
-    description: 'Base de galleta, queso y salsa de caramelo salado.',
-    color: '#6F4E37',
-  },
-  {
-    id: 8,
-    name: 'Frappe Moka',
-    category: 'frios',
-    price: '$5.20',
-    description: 'Batido de cafe, chocolate y crema montada.',
-    color: '#4E342E',
-  },
-];
-
-const categories: MenuCategoryFilter[] = [
-  { key: 'todos', label: 'Todo' },
-  { key: 'calientes', label: 'Calientes' },
-  { key: 'frios', label: 'Frios' },
-  { key: 'postres', label: 'Postres' },
-];
+import { templateConfig, type TemplateMenuCategory, type TemplateMenuItem } from '@/src/config/template';
 
 type MenuCardProps = {
-  item: MenuItem;
+  item: TemplateMenuItem;
 };
 
 function MenuCard({ item }: MenuCardProps) {
+  const menu = templateConfig.menu;
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -128,8 +40,8 @@ function MenuCard({ item }: MenuCardProps) {
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="relative bg-[#2C1810] border border-[#3E2723] rounded-2xl p-6 md:p-8 cursor-pointer transition-transform duration-200 ease-out will-change-transform group overflow-hidden h-full"
-        style={{ transformStyle: 'preserve-3d' }}
+        className="relative rounded-2xl p-6 md:p-8 cursor-pointer transition-transform duration-200 ease-out will-change-transform group overflow-hidden h-full"
+        style={{ transformStyle: 'preserve-3d', background: menu.colors.cardBg, border: `1px solid ${menu.colors.cardBorder}` }}
       >
         <div
           className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
@@ -143,22 +55,28 @@ function MenuCard({ item }: MenuCardProps) {
 
         <div className="relative z-10">
           <div className="flex justify-between items-start mb-4">
-            <span className="text-[10px] tracking-[3px] uppercase text-[#8D6E63] border border-[#3E2723] px-3 py-1 rounded-full">
+            <span
+              className="text-[10px] tracking-[3px] uppercase px-3 py-1 rounded-full"
+              style={{ color: menu.colors.cardSubtext, border: `1px solid ${menu.colors.cardBorder}` }}
+            >
               {item.category}
             </span>
-            <span className="text-xl font-light text-[#D4A574]">{item.price}</span>
+            <span className="text-xl font-light" style={{ color: menu.colors.cardAccent }}>{item.price}</span>
           </div>
 
-          <h3 className="text-2xl md:text-3xl font-light text-[#F5E6D3] mb-3 leading-tight">
+          <h3 className="text-2xl md:text-3xl font-light mb-3 leading-tight" style={{ color: menu.colors.cardText }}>
             {item.name}
           </h3>
 
-          <p className="text-[#8D6E63] text-sm md:text-base leading-relaxed">
+          <p className="text-sm md:text-base leading-relaxed" style={{ color: menu.colors.cardSubtext }}>
             {item.description}
           </p>
 
-          <div className="mt-6 flex items-center gap-2 text-[#D4A574] text-xs tracking-[2px] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
-            <span>Agregar al pedido</span>
+          <div
+            className="mt-6 flex items-center gap-2 text-xs tracking-[2px] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0"
+            style={{ color: menu.colors.cardAccent }}
+          >
+            <span>{menu.addToOrderLabel}</span>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
@@ -170,15 +88,16 @@ function MenuCard({ item }: MenuCardProps) {
 }
 
 export default function MenuSection() {
-  const [activeCategory, setActiveCategory] = useState<MenuCategory>('todos');
+  const menu = templateConfig.menu;
+  const [activeCategory, setActiveCategory] = useState<TemplateMenuCategory>('todos');
   const [isAnimating, setIsAnimating] = useState(false);
 
   const filteredItems =
     activeCategory === 'todos'
-      ? menuItems
-      : menuItems.filter((item) => item.category === activeCategory);
+      ? menu.items
+      : menu.items.filter((item) => item.category === activeCategory);
 
-  const handleCategoryChange = (cat: MenuCategory) => {
+  const handleCategoryChange = (cat: TemplateMenuCategory) => {
     if (cat === activeCategory) return;
     setIsAnimating(true);
     setTimeout(() => {
@@ -188,7 +107,11 @@ export default function MenuSection() {
   };
 
   return (
-    <section id="menu" className="relative bg-[#F5E6D3] py-24 md:py-32 px-4 md:px-8 overflow-hidden">
+    <section
+      id={menu.sectionId}
+      className="relative py-24 md:py-32 px-4 md:px-8 overflow-hidden"
+      style={{ background: menu.colors.background }}
+    >
       <style>{`
         @keyframes fadeInUpMenu {
           from { opacity: 0; transform: translateY(30px); }
@@ -201,17 +124,19 @@ export default function MenuSection() {
 
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <p className="text-xs tracking-[6px] uppercase text-[#6F4E37] mb-4">Nuestra Carta</p>
-          <h2 className="text-4xl md:text-6xl font-light text-[#2C1810] mb-6">
-            Sabores que <span className="italic text-[#6F4E37]">perduran</span>
+          <p className="text-xs tracking-[6px] uppercase mb-4" style={{ color: menu.colors.textMuted }}>
+            {menu.eyebrow}
+          </p>
+          <h2 className="text-4xl md:text-6xl font-light mb-6" style={{ color: menu.colors.heading }}>
+            {menu.titlePrefix} <span className="italic" style={{ color: menu.colors.textMuted }}>{menu.titleAccent}</span>
           </h2>
-          <p className="text-[#6F4E37] max-w-xl mx-auto text-base md:text-lg">
-            Cada bebida es una ceremonia. Cada postre, un cierre perfecto.
+          <p className="max-w-xl mx-auto text-base md:text-lg" style={{ color: menu.colors.textMuted }}>
+            {menu.description}
           </p>
         </div>
 
         <div className="flex flex-wrap justify-center gap-3 mb-16">
-          {categories.map((cat) => (
+          {menu.categories.map((cat) => (
             <button
               key={cat.key}
               type="button"
@@ -220,9 +145,14 @@ export default function MenuSection() {
                 relative px-6 py-3 rounded-full text-xs tracking-[3px] uppercase transition-all duration-300 overflow-hidden
                 ${activeCategory === cat.key
                   ? 'bg-[#2C1810] text-[#F5E6D3]'
-                  : 'bg-transparent text-[#2C1810] border border-[#2C1810]/20 hover:border-[#2C1810]/60'
+                  : 'bg-transparent border hover:opacity-80'
                 }
               `}
+              style={
+                activeCategory === cat.key
+                  ? { background: menu.colors.heading, color: menu.colors.background }
+                  : { color: menu.colors.heading, borderColor: `${menu.colors.heading}33` }
+              }
             >
               {cat.label}
             </button>
@@ -247,8 +177,8 @@ export default function MenuSection() {
         </div>
 
         {filteredItems.length === 0 && (
-          <div className="text-center py-20 text-[#6F4E37]">
-            <p className="text-lg">No hay items en esta categoria.</p>
+          <div className="text-center py-20" style={{ color: menu.colors.textMuted }}>
+            <p className="text-lg">{menu.emptyState}</p>
           </div>
         )}
       </div>

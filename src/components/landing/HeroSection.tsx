@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import CoffeeWaves from './CoffeeWaves';
+import { templateConfig } from '@/src/config/template';
 
 type SteamParticlesProps = {
   count?: number;
@@ -34,6 +35,7 @@ function SteamParticles({ count = 5 }: SteamParticlesProps) {
 }
 
 export default function HeroSection() {
+  const hero = templateConfig.hero;
   const [scrollProgress, setScrollProgress] = useState(0);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const steamRef = useRef<HTMLDivElement | null>(null);
@@ -64,10 +66,11 @@ export default function HeroSection() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const titleText = 'Aroma Vivo';
-
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[#1a0f0a] font-serif">
+    <section
+      className="relative h-screen flex items-center justify-center overflow-hidden font-serif"
+      style={{ background: hero.palette.background }}
+    >
       <style>{`
         @keyframes steam {
           0% { transform: translateY(0) scale(1); opacity: 0; }
@@ -104,17 +107,18 @@ export default function HeroSection() {
 
       <div
         ref={contentRef}
-        className="relative z-10 text-center text-[#F5E6D3] transition-opacity duration-300 will-change-transform px-4"
+        className="relative z-10 text-center transition-opacity duration-300 will-change-transform px-4"
+        style={{ color: hero.palette.textMain }}
       >
         <p
-          className="text-xs md:text-sm tracking-[6px] uppercase mb-8 text-[#D4A574] animate-fadeInUp"
-          style={{ animationDelay: '0.5s', opacity: 0 }}
+          className="text-xs md:text-sm tracking-[6px] uppercase mb-8 animate-fadeInUp"
+          style={{ color: hero.palette.textAccent, animationDelay: '0.5s', opacity: 0 }}
         >
-          Desde 2024 · Tostado Artesanal
+          {hero.badge}
         </p>
 
         <h1 className="text-[clamp(3rem,8vw,7rem)] leading-none mb-6 font-light">
-          {titleText.split('').map((char, i) => (
+          {hero.title.split('').map((char, i) => (
             <span
               key={i}
               className="inline-block animate-letterReveal"
@@ -130,20 +134,31 @@ export default function HeroSection() {
         </h1>
 
         <p
-          className="text-base md:text-xl max-w-[500px] mx-auto mb-10 leading-relaxed text-[#D4A574] animate-fadeInUp px-4"
-          style={{ animationDelay: '2s', opacity: 0 }}
+          className="text-base md:text-xl max-w-[500px] mx-auto mb-10 leading-relaxed animate-fadeInUp px-4"
+          style={{ color: hero.palette.textAccent, animationDelay: '2s', opacity: 0 }}
         >
-          Cada taza cuenta una historia. Deja que el cafe te hable antes del primer sorbo.
+          {hero.description}
         </p>
 
         <a
-          href="#menu"
-          className="relative inline-block px-8 md:px-10 py-3 md:py-4 border border-[#D4A574] text-[#F5E6D3] text-xs md:text-sm tracking-[3px] uppercase overflow-hidden transition-colors duration-400 z-[1] animate-fadeInUp group"
-          style={{ animationDelay: '2.3s', opacity: 0 }}
+          href={hero.ctaHref}
+          className="relative inline-block px-8 md:px-10 py-3 md:py-4 border text-xs md:text-sm tracking-[3px] uppercase overflow-hidden transition-colors duration-400 z-[1] animate-fadeInUp group"
+          style={{
+            borderColor: hero.palette.textAccent,
+            color: hero.palette.textMain,
+            animationDelay: '2.3s',
+            opacity: 0,
+          }}
         >
-          <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 bg-[#D4A574] rounded-full transition-all duration-600 group-hover:w-[300px] group-hover:h-[300px] -z-[1]" />
-          <span className="relative z-10 group-hover:text-[#2C1810] transition-colors duration-400">
-            Descubri el Menu
+          <span
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 rounded-full transition-all duration-600 group-hover:w-[300px] group-hover:h-[300px] -z-[1]"
+            style={{ background: hero.palette.textAccent }}
+          />
+          <span
+            className="relative z-10 transition-colors duration-400"
+            style={{ color: hero.palette.textMain }}
+          >
+            {hero.ctaLabel}
           </span>
         </a>
       </div>
@@ -152,7 +167,10 @@ export default function HeroSection() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-fadeInUp"
         style={{ animationDelay: '3s', opacity: 0 }}
       >
-        <div className="w-px h-[60px] bg-gradient-to-b from-[#D4A574] to-transparent animate-scrollPulse" />
+        <div
+          className="w-px h-[60px] bg-gradient-to-b to-transparent animate-scrollPulse"
+          style={{ backgroundImage: `linear-gradient(to bottom, ${hero.palette.textAccent}, transparent)` }}
+        />
       </div>
     </section>
   );
