@@ -99,7 +99,8 @@ export default function MenuSection() {
     <section
       id="menu"
       data-defer-render="true"
-      className="relative bg-cream py-32 md:py-44 px-6 md:px-10"
+      className="relative py-32 md:py-44 px-6 md:px-10"
+      style={{ backgroundColor: 'rgba(253, 251, 247, 0.93)' }}
     >
       <div className="max-w-7xl mx-auto mb-16">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">

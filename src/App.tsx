@@ -24,10 +24,37 @@ export default function App() {
       <div className={`grain-overlay ${showSplash ? 'grain-paused' : ''}`}>
         <Navbar />
         <main>
-          <Hero />
+          {/*
+           * This wrapper holds the shared sticky background image.
+           * The image stays fixed at the top of the viewport while the user
+           * scrolls through Hero, Philosophy, and Menu. Once past Menu, the
+           * wrapper ends and the image is no longer visible.
+           */}
+          <div className="relative">
+            {/* Sticky background — takes no height, image always at viewport top */}
+            <div
+              className="sticky top-0 h-0 w-full pointer-events-none overflow-visible"
+              aria-hidden="true"
+            >
+              <img
+                src="/images/hero-bg.jpg"
+                alt=""
+                className="absolute top-0 left-0 h-screen w-full object-cover"
+                fetchPriority="high"
+                decoding="async"
+              />
+            </div>
+
+            {/* Sections scroll over the fixed background */}
+            <Hero />
+            <Suspense fallback={null}>
+              <Philosophy />
+              <MenuSection />
+            </Suspense>
+          </div>
+
+          {/* Remaining sections have their own solid backgrounds */}
           <Suspense fallback={<div className="h-24" aria-hidden="true" />}>
-            <Philosophy />
-            <MenuSection />
             <Process />
             <Ambience />
             <Testimonials />

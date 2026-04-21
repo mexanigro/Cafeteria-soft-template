@@ -21,7 +21,8 @@ export default function Philosophy() {
     <section
       id="philosophy"
       data-defer-render="true"
-      className="relative bg-cream py-32 md:py-44 px-6 md:px-10 overflow-hidden"
+      className="relative py-32 md:py-44 px-6 md:px-10 overflow-hidden"
+      style={{ backgroundColor: 'rgba(253, 251, 247, 0.88)' }}
     >
       <div
         className="absolute left-1/2 top-0 w-px h-24 bg-caramel/30 origin-top"
